@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ShaderControls</class>
+ <widget class="QWidget" name="ShaderControls">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>281</width>
+    <height>614</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>510</y>
+     <width>231</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Gadugi</family>
+    </font>
+   </property>
+   <property name="title">
+    <string>Post-Process Shader</string>
+   </property>
+   <widget class="QComboBox" name="postprocessShaderComboBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>141</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Gadugi</family>
+     </font>
+    </property>
+    <item>
+     <property name="text">
+      <string>None</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Greyscale</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Gaussian Blur</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Sobel</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bloom</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Worley Noise</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Fast Worley</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Depth</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>FBM</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Test FBM</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Perlin</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Perlin FBM</string>
+     </property>
+    </item>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>241</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Gadugi</family>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Shader Options</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>150</y>
+     <width>231</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Gadugi</family>
+    </font>
+   </property>
+   <property name="title">
+    <string>Surface Shader</string>
+   </property>
+   <widget class="QComboBox" name="surfaceShaderComboBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>151</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Gadugi</family>
+     </font>
+    </property>
+    <item>
+     <property name="text">
+      <string>Lambert</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Blinn-Phong</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Matcap</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Color Gradient</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Vertex Deformation</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Instanced</string>
+     </property>
+    </item>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>50</y>
+     <width>231</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Gadugi</family>
+    </font>
+   </property>
+   <property name="title">
+    <string>Model</string>
+   </property>
+   <widget class="QComboBox" name="modelComboBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>151</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Gadugi</family>
+     </font>
+    </property>
+    <item>
+     <property name="text">
+      <string>Wahoo</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Moo Beast</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Minecraft</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Sammy</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Cube</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Instanced Cube</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Instanced Sphere</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Instanced Monkey</string>
+     </property>
+    </item>
+   </widget>
+  </widget>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>220</y>
+     <width>211</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Gadugi</family>
+    </font>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="matcapTab">
+    <attribute name="title">
+     <string>Matcap Options</string>
+    </attribute>
+    <widget class="QComboBox" name="matcapComboBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>141</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Gadugi</family>
+      </font>
+     </property>
+     <item>
+      <property name="text">
+       <string>Red Clay</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Red Plastic</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Chrome</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Pearl</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Orange-Green</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Blue-Purple</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Outline</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Surface Normals</string>
+      </property>
+     </item>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_4">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>320</y>
+     <width>241</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Gadugi</family>
+    </font>
+   </property>
+   <property name="title">
+    <string>Post-Surface Shader </string>
+   </property>
+   <widget class="QComboBox" name="postsurfaceShaderComboBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>141</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Gadugi</family>
+     </font>
+    </property>
+    <item>
+     <property name="text">
+      <string>None</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Cube Voxels</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Sphere Voxels</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Monkey Voxels</string>
+     </property>
+    </item>
+   </widget>
+  </widget>
+  <widget class="QDoubleSpinBox" name="resSpinBox">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>390</y>
+     <width>61</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <double>0.050000000000000</double>
+   </property>
+   <property name="maximum">
+    <double>1.000000000000000</double>
+   </property>
+   <property name="singleStep">
+    <double>0.050000000000000</double>
+   </property>
+   <property name="value">
+    <double>0.150000000000000</double>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>390</y>
+     <width>61</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Voxel Size</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>420</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Voxel Grid Spacing %</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spacingSpinBox">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>420</y>
+     <width>61</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>200</number>
+   </property>
+   <property name="singleStep">
+    <number>10</number>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="seethroughCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>450</y>
+     <width>131</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Active Camo   </string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="shadeLambertCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>470</y>
+     <width>131</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Shade Lambert   </string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="rotModelsCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>120</y>
+     <width>131</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rotate Models   </string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

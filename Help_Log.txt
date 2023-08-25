@@ -1,0 +1,17 @@
+2022/10/02:
+
+Received help from Nick Gurnard to debug Blinn-Phong surface shader issue.
+
+2022/10/03:
+
+Helped Nick Gurnard formulate math behind a vertex deformation shader to get mario to fit into a conical shape.
+Also discussed high-level concepts regarding what to do in vertex shader vs. fragement shader and he helped me 
+review the notes to clear up my understanding in this area.
+
+Recieved help from TA Lorant regarding how to avoid subtle black border surrounding gaussian post-process filter.
+Ultimately clipped indices to texture dimensions.
+
+Used shadertoy example by IQ here: https://www.shadertoy.com/view/MslGD8
+as inspiration for my worley noise post-process shader. Went beyond just implementing it and added functionality to
+sample original texture color at vornoi point location and apply it to the entire worley cell. Also went on to include
+chromatic abberation and unique time-functions to transition between various cell sizes, amounts of abberation, etc.

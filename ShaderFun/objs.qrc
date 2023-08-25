@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>objs/wahoo.obj</file>
+        <file>objs/cow.obj</file>
+        <file>objs/icosphere.obj</file>
+        <file>objs/monkey.obj</file>
+        <file>objs/Grass_block.obj</file>
+        <file>objs/Sammy.obj</file>
+    </qresource>
+</RCC>
