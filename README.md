@@ -1,6 +1,6 @@
 # ShaderFun + Instanced Voxelization Shader
 
-This is a completely original personal project which expands dramatically upon a graphics pipeline project from my first computer graphics course at Penn (CIS 5610).
+This is an original personal project which expands dramatically upon a graphics pipeline project from my first computer graphics course at Penn (CIS 5610).
 
 DEMO: 
 
