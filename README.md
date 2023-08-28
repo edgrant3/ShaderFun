@@ -4,7 +4,7 @@ This is a completely original personal project which expands dramatically upon a
 
 DEMO: 
 
-[![Instanced Voxelization Shader](VoxelShaderThumbnailPlaybutton.png)](https://youtu.be/ICLoxhMiFZI "Instanced Voxelization Shader")
+[![Instanced Voxelization Shader](captures/VoxelShaderThumbnailPlaybutton.png)](https://youtu.be/ICLoxhMiFZI "Instanced Voxelization Shader")
 
 
 
