@@ -10,21 +10,23 @@ uniform sampler2D u_Texture; // The texture to be read from by this shader
 
 //These are the interpolated values out of the rasterizer, so you can't know
 //their specific values without knowing the vertices that contributed to them
-in vec4 fs_Nor;
+in vec3 fs_Nor;
 in vec4 fs_LightVec;
 in vec2 fs_UV;
 
 layout(location = 0) out vec3 out_Col;//This is the final output color that you will see on your screen for the pixel that is currently being processed.
-layout(location = 1) out float frag_depth;
+//layout(location = 1) out float frag_depth;
+layout(location = 1) out vec4 out_Nor;
 
 void main()
 {
+    vec3 nor = (fs_Nor + vec3(1.0)) / vec3(2.0);
+    out_Nor = vec4(nor, 0.0);
     // Material base color (before shading)
     vec4 diffuseColor = texture(u_Texture, fs_UV);
-//    diffuseColor = vec4(fs_UV.x, fs_UV.y, 0.0, 1.0);
 
     // Calculate the diffuse term for Lambert shading
-    float diffuseTerm = dot(normalize(fs_Nor), normalize(fs_LightVec));
+    float diffuseTerm = dot(normalize(vec4(fs_Nor, 0.0)), normalize(fs_LightVec));
     // Avoid negative lighting values
     diffuseTerm = clamp(diffuseTerm, 0, 1);
 
@@ -36,6 +38,6 @@ void main()
 
     // Compute final shaded color
     out_Col = vec3(diffuseColor.rgb * lightIntensity);
-    frag_depth = gl_FragCoord.z;
+//    frag_depth = gl_FragCoord.z;
 //    out_Col = normalize(abs(fs_Nor));
 }

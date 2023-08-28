@@ -6,7 +6,9 @@ PostSurfaceShader::PostSurfaceShader(OpenGLContext *context)
     : ShaderProgram(context),
       attrPos(-1), attrNor(-1), attrUV(-1), attrCol(-1), attrPosOffset(-1),
       unifModel(-1), unifModelInvTr(-1), unifView(-1), unifProj(-1),
-      unifDimensions(-1), unifInstanceRes(-1), unifDepthSampler2D(-1)
+      unifDimensions(-1), unifInstanceRes(-1),
+      unifDepthSampler2D(-1), unifNormalSampler2D(-1),
+      unifUseTexCol(-1),unifUseGaussianFilter(-1)
 {}
 
 PostSurfaceShader::~PostSurfaceShader()
@@ -31,12 +33,17 @@ void PostSurfaceShader::setupMemberVars()
 
     unifSampler2D  = context->glGetUniformLocation(prog, "u_RenderedTexture");
     unifDepthSampler2D  = context->glGetUniformLocation(prog, "u_DepthTexture");
+    unifNormalSampler2D  = context->glGetUniformLocation(prog, "u_NormalTexture");
     unifDimensions = context->glGetUniformLocation(prog, "u_Dimensions");
 
     unifTime = context->glGetUniformLocation(prog, "u_Time");
     unifInstanceRes = context->glGetUniformLocation(prog, "u_Res");
 
     unifDrawLambert = context->glGetUniformLocation(prog, "u_ShadeLambert");
+    unifUseTexCol = context->glGetUniformLocation(prog, "u_UseTexCol");
+    unifUseGaussianFilter = context->glGetUniformLocation(prog, "u_UseGaussianFilter");
+    unifUseNormalCulling = context->glGetUniformLocation(prog, "u_UseNormalCulling");
+
 
     context->printGLErrorLog();
 }
@@ -47,6 +54,33 @@ void PostSurfaceShader::setShadeLambert(int s)
     if (unifDrawLambert != -1)
     {
         context->glUniform1i(unifDrawLambert, s);
+    }
+}
+
+void PostSurfaceShader::setUseTexCol(int s)
+{
+    useMe();
+    if (unifUseTexCol != -1)
+    {
+        context->glUniform1i(unifUseTexCol, s);
+    }
+}
+
+void PostSurfaceShader::setUseGaussianFilter(int s)
+{
+    useMe();
+    if (unifUseGaussianFilter != -1)
+    {
+        context->glUniform1i(unifUseGaussianFilter, s);
+    }
+}
+
+void PostSurfaceShader::setUseNormalCulling(int s)
+{
+    useMe();
+    if (unifUseNormalCulling != -1)
+    {
+        context->glUniform1i(unifUseNormalCulling, s);
     }
 }
 
@@ -73,6 +107,7 @@ void PostSurfaceShader::draw(Drawable &d, int textureSlot = 0)
     if (attrNor != -1 && d.bindNor()) {
         context->glEnableVertexAttribArray(attrNor);
         context->glVertexAttribPointer(attrNor, 4, GL_FLOAT, false, 0, NULL);
+        context->glVertexAttribDivisor(attrNor, 0);
     }
 
     if (attrUV != -1 && d.bindUV()) {
@@ -210,6 +245,11 @@ void PostSurfaceShader::drawInstanced(InstancedDrawable &d)
     if(unifDepthSampler2D != -1)
     {
         context->glUniform1i(unifDepthSampler2D, /*GL_TEXTURE*/1);
+    }
+
+    if(unifNormalSampler2D != -1)
+    {
+        context->glUniform1i(unifNormalSampler2D, /*GL_TEXTURE*/3);
     }
 
     // Each of the following blocks checks that:

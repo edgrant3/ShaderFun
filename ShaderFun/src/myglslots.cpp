@@ -41,7 +41,7 @@ void MyGL::slot_setCurrentModel(int m)
                 float xzMax = glm::max(bb.max.x, bb.max.z);
                 bb.min = {xzMin, bb.min.y, xzMin};
                 bb.max ={xzMax, bb.max.y, xzMax};
-                glm::vec3 pDiff = glm::vec3(0.1) * (bb.max - bb.min);
+                glm::vec3 pDiff = glm::vec3(0.2) * (bb.max - bb.min);
                 igrid->setBounds(bb.min - pDiff, bb.max + pDiff);
                 igrid->updateInstancedData();
             }
@@ -91,5 +91,37 @@ void MyGL::slot_setModelRotationFLag(int s)
 {
     m_rotateModels = s;
 }
+
+void MyGL::slot_setUseTexCol(int s)
+{
+    std::cout << "Toggling UseTexCol" << std::endl;
+    for (auto& pss : m_postsurfaceShaders) {
+        pss->setUseTexCol(s);
+    }
+}
+
+void MyGL::slot_setUseGaussianFilter(int s)
+{
+    std::cout << "Setting PSS Gaussian Filtering to: " << (s ? "TRUE" : "FALSE") << std::endl;
+    for (auto& pss : m_postsurfaceShaders) {
+        pss->setUseGaussianFilter(s);
+    }
+}
+
+void MyGL::slot_setUseNormalCulling(int s)
+{
+    std::cout << "Setting PSS Normal Culling to: " << (s ? "TRUE" : "FALSE") << std::endl;
+    for (auto& pss : m_postsurfaceShaders) {
+        pss->setUseNormalCulling(s);
+    }
+}
+
+void MyGL::slot_setUseBackgrounds(int s)
+{
+    m_useBackgrounds = s;
+}
+
+
+
 
 

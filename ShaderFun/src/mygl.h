@@ -80,6 +80,7 @@ private:
     // A collection of handles to the textures used by the frame buffers.
     // m_frameBuffers[i] writes to m_renderedTextures[i].
     GLuint m_renderedTexture;
+    GLuint m_normalTexture;
     // A collection of handles to the depth buffers used by our frame buffers.
     // m_frameBuffers[i] writes to m_depthRenderBuffers[i].
     GLuint m_depthRenderBuffer;
@@ -104,6 +105,7 @@ private:
 
     bool m_seethroughIGrid;
     bool m_rotateModels;
+    bool m_useBackgrounds;
 
 private:
     // Sets up the arrays of frame buffers
@@ -166,6 +168,10 @@ public slots:
     void slot_makeIGridSeethrough(int);
     void slot_shadeIGridLambert(int);
     void slot_setModelRotationFLag(int);
+    void slot_setUseTexCol(int);
+    void slot_setUseGaussianFilter(int);
+    void slot_setUseNormalCulling(int);
+    void slot_setUseBackgrounds(int);
 };
 
 

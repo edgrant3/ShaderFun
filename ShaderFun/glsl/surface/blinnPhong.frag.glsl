@@ -18,11 +18,15 @@ in vec4 fs_CameraPos;
 in vec4 fs_Pos;
 
 layout(location = 0) out vec3 out_Col;//This is the final output color that you will see on your screen for the pixel that is currently being processed.
+layout(location = 1) out vec4 out_Nor;
 
 void main()
 {
     // TODO Homework 4
     //out_Col = vec3(0, 0, 0);
+
+    vec3 nor = (fs_Nor.xyz + vec3(1.0)) / vec3(2.0);
+    out_Nor = vec4(nor, 0.0);
 
     vec4 frag2Cam = normalize(fs_CameraPos - fs_Pos);
     vec4 frag2Light = normalize(fs_LightVec - fs_Pos);

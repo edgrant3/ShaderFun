@@ -58,6 +58,7 @@ void SurfaceShader::draw(Drawable &d, int textureSlot = 0)
     if (attrNor != -1 && d.bindNor()) {
         context->glEnableVertexAttribArray(attrNor);
         context->glVertexAttribPointer(attrNor, 4, GL_FLOAT, false, 0, NULL);
+        context->glVertexAttribDivisor(attrNor, 0);
     }
 
     if (attrUV != -1 && d.bindUV()) {

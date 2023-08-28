@@ -6,5 +6,8 @@
         <file>objs/monkey.obj</file>
         <file>objs/Grass_block.obj</file>
         <file>objs/Sammy.obj</file>
+        <file>objs/block.obj</file>
+        <file>objs/Australian_Cattle_Dog.obj</file>
+        <file>objs/Australian_Cattle_Dog_V2.obj</file>
     </qresource>
 </RCC>

@@ -6,7 +6,7 @@
 
 MyGL::MyGL(QWidget *parent)
     : OpenGLContext(parent),
-      m_geomQuad(this), m_camera(640, 480, glm::vec3(0, 0, 12), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)),
+      m_geomQuad(this), m_camera(1920/*640*/, 1080/*480*/, glm::vec3(0, 0, 12), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)),
       m_surfaceShaders(), m_postprocessShaders(), m_postsurfaceShaders(),
       usePostSurfaceShaders(false),
       mp_progSurfaceCurrent(nullptr),
@@ -15,14 +15,14 @@ MyGL::MyGL(QWidget *parent)
       mp_modelCurrent(nullptr), mp_instancedgridCurrent(nullptr),
       m_matcapTextures(), mp_matcapTexCurrent(nullptr),
       m_frameBuffer(-1),
-      m_renderedTexture(-1),
+      m_renderedTexture(-1), m_normalTexture(-1),
       m_depthRenderBuffer(-1),
       m_secondaryframeBuffer(-1),
       m_secondaryrenderedTexture(-1),
       m_secondarydepthRenderBuffer(-1),
       m_depthTexture(-1), m_secondarydepthTexture(-1),
       m_time(0.f), m_pausetime(0.f), m_mousePosPrev(),
-      m_seethroughIGrid(false), m_rotateModels(false)
+      m_seethroughIGrid(false), m_rotateModels(false), m_useBackgrounds(true)
 {
     m_commonModelTransform = glm::mat4(); // Identity Matrix
     setFocusPolicy(Qt::StrongFocus);
@@ -97,7 +97,7 @@ void MyGL::paintGL()
 {
 
     if (m_rotateModels) {
-        float rad = (float)m_pausetime / 2.f;
+        float rad = (float)m_pausetime / 4.f;
         m_commonModelTransform = glm::rotate(glm::mat4(), rad, glm::vec3(0.0f, 1.0f, 0.0f));
         m_pausetime++;
     }
@@ -140,7 +140,7 @@ void MyGL::render3DScene()
 
     // Draw Model
     // Draw the background texture first
-    if (!usePostSurfaceShaders) {
+    if (!usePostSurfaceShaders && m_useBackgrounds) {
         mp_modelCurrent->bindBGTexture();
         mp_progPostprocessNoOp->draw(m_geomQuad, 2);
     }
@@ -159,9 +159,10 @@ void MyGL::renderPostSurfacePass()
     else {
         glBindTexture(GL_TEXTURE_2D, m_renderedTexture);
     }
-
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, m_depthTexture);
+    glActiveTexture(GL_TEXTURE3);
+    glBindTexture(GL_TEXTURE_2D, m_normalTexture);
 
     // Render to our framebuffer rather than the viewport
     glBindFramebuffer(GL_FRAMEBUFFER, m_secondaryframeBuffer);
@@ -170,11 +171,14 @@ void MyGL::renderPostSurfacePass()
     // Clear the screen so that we only see newly drawn images
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    mp_modelCurrent->bindBGTexture();
-    mp_progPostprocessNoOp->draw(m_geomQuad, 2);
+    if (m_useBackgrounds) {
+        mp_modelCurrent->bindBGTexture();
+        mp_progPostprocessNoOp->draw(m_geomQuad, 2);
+    }
 
     mp_progPostSurfaceCurrent->setViewProjMatrix(m_camera.getView(), m_camera.getProj());
     mp_progPostSurfaceCurrent->setModelMatrix(glm::mat4());
+    mp_progPostSurfaceCurrent->setCameraPos(m_camera.eye);
 
 //    glDepthMask(GL_FALSE); // disable depth buffer writing
     mp_progPostSurfaceCurrent->drawInstanced(*mp_instancedgridCurrent);
@@ -196,6 +200,7 @@ void MyGL::performPostprocessRenderPass()
     glActiveTexture(GL_TEXTURE0);
     usePostSurfaceShaders ? glBindTexture(GL_TEXTURE_2D, m_secondaryrenderedTexture):
                             glBindTexture(GL_TEXTURE_2D, m_renderedTexture);
+//                            glBindTexture(GL_TEXTURE_2D, m_normalTexture);
     glActiveTexture(GL_TEXTURE1);
     usePostSurfaceShaders ? glBindTexture(GL_TEXTURE_2D, m_secondarydepthTexture):
                             glBindTexture(GL_TEXTURE_2D, m_depthTexture);
@@ -227,10 +232,19 @@ void MyGL::createRenderBuffers()
     glBindTexture(GL_TEXTURE_2D, m_depthTexture);
 //    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, (void*)0);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, w, h, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    // ----- NORMAL TEXTURE -----
+    glGenTextures(1, &m_normalTexture);
+    glBindTexture(GL_TEXTURE_2D, m_normalTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*)0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
@@ -288,6 +302,7 @@ void MyGL::createRenderBuffers()
 
     // Set m_renderedTexture as the color output of our frame buffer
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_renderedTexture, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, m_normalTexture, 0);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT , GL_TEXTURE_2D, m_depthTexture   , 0);
 
     // Sets the color output of the fragment shader to be stored in GL_COLOR_ATTACHMENT0, which we previously set to m_renderedTextures[i]
@@ -393,6 +408,9 @@ void MyGL::createShaders()
     m_postsurfaceShaders.push_back(igrid);
 
     slot_setCurrentPostSurfaceShaderProgram(0);
+    slot_setUseTexCol(1);
+    slot_setUseGaussianFilter(0);
+    slot_setUseNormalCulling(0);
 
 }
 
@@ -421,6 +439,12 @@ void MyGL::createMeshes()
     sammy->loadTexture();
     sammy->loadBGTexture();
     m_models.push_back(sammy);
+
+    std::shared_ptr<Mesh> dog = std::make_shared<Mesh>(this);
+    dog->createFromOBJ(":/objs/Australian_Cattle_Dog_V2.obj", ":/textures/Australian_Cattle_Dog_dif.jpg", ":/textures/foggy_field.jpg");
+    dog->loadTexture();
+    dog->loadBGTexture();
+    m_models.push_back(dog);
 
     std::shared_ptr<Mesh> cube = std::make_shared<Mesh>(this);
     cube->createCube(":/textures/fractal.jpg", ":/textures/mengersponge.jpg");
@@ -454,6 +478,12 @@ void MyGL::createMeshes()
     imonkey->create();
     m_models.push_back(imonkey);
     m_instancedgrids.push_back(imonkey);
+
+    std::shared_ptr<InstancedShapeGrid> iblock = std::make_shared<InstancedShapeGrid>(this, resolution, lowerBound, upperBound);
+    iblock->setShape(InstancedShape::OBJ, ":/objs/block.obj");
+    iblock->create();
+    m_models.push_back(iblock);
+    m_instancedgrids.push_back(iblock);
 
     mp_instancedgridCurrent = m_instancedgrids[0].get();
 

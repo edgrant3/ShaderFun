@@ -20,6 +20,11 @@ ShaderControls::ShaderControls(QWidget *parent) :
     connect(ui->seethroughCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slot_makeIGridSeethrough(int)));
     connect(ui->shadeLambertCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slot_shadeIGridLambert(int)));
     connect(ui->rotModelsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slot_setModelRotationFLag(int)));
+    connect(ui->useTexColCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slot_setUseTexCol(int)));
+    connect(ui->useGaussianFilterCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slot_setUseGaussianFilter(int)));
+    connect(ui->useNormalCullingCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slot_setUseNormalCulling(int)));
+    connect(ui->useBackgroundsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slot_setUseBackgrounds(int)));
+
 }
 
 
@@ -76,4 +81,24 @@ void ShaderControls::slot_shadeIGridLambert(int s)
 void ShaderControls::slot_setModelRotationFLag(int s)
 {
     emit sig_setModelRotationFLag(s);
+}
+
+void ShaderControls::slot_setUseTexCol(int s)
+{
+    emit sig_setUseTexCol(s);
+}
+
+void ShaderControls::slot_setUseGaussianFilter(int s)
+{
+    emit sig_setUseGaussianFilter(s);
+}
+
+void ShaderControls::slot_setUseNormalCulling(int s)
+{
+    emit sig_setUseNormalCulling(s);
+}
+
+void ShaderControls::slot_setUseBackgrounds(int s)
+{
+    emit sig_setUseBackgrounds(s);
 }

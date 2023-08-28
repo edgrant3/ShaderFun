@@ -19,5 +19,7 @@
         <file>textures/All_blocks.png</file>
         <file>textures/mario_movie.jpg</file>
         <file>textures/Sammy.JPEG</file>
+        <file>textures/Australian_Cattle_Dog_dif.jpg</file>
+        <file>textures/foggy_field.jpg</file>
     </qresource>
 </RCC>

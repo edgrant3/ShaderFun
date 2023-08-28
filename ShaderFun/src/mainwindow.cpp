@@ -23,6 +23,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(shaderControls, SIGNAL(sig_makeIGridSeethrough(int)), ui->mygl, SLOT(slot_makeIGridSeethrough(int)));
     connect(shaderControls, SIGNAL(sig_shadeIGridLambert(int)), ui->mygl, SLOT(slot_shadeIGridLambert(int)));
     connect(shaderControls, SIGNAL(sig_setModelRotationFLag(int)), ui->mygl, SLOT(slot_setModelRotationFLag(int)));
+    connect(shaderControls, SIGNAL(sig_setUseTexCol(int)), ui->mygl, SLOT(slot_setUseTexCol(int)));
+    connect(shaderControls, SIGNAL(sig_setUseGaussianFilter(int)), ui->mygl, SLOT(slot_setUseGaussianFilter(int)));
+    connect(shaderControls, SIGNAL(sig_setUseNormalCulling(int)), ui->mygl, SLOT(slot_setUseNormalCulling(int)));
+    connect(shaderControls, SIGNAL(sig_setUseBackgrounds(int)), ui->mygl, SLOT(slot_setUseBackgrounds(int)));
+
 
     shaderControls->show();
     shaderControls->move(QGuiApplication::primaryScreen()->availableGeometry().center() - this->rect().center() + QPoint(this->width(), 0));

@@ -10,12 +10,13 @@ in vec4 vs_Nor;
 in vec2 vs_UV;
 
 out vec2 fs_UV;
+out vec3 fs_Nor;
 
 void main()
 {
     // TODO Homework 4
-    vec3 fs_Nor = normalize(u_ModelInvTr * vec3(vs_Nor));
-    fs_Nor = mat3(u_View) * fs_Nor;
+    vec3 Nor = normalize(u_ModelInvTr * vec3(vs_Nor));
+    fs_Nor = mat3(u_View) * Nor;
 
     fs_UV.x = (fs_Nor.x + 1) / 2;
     fs_UV.y = (fs_Nor.y + 1) / 2;

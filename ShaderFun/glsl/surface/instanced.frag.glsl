@@ -15,11 +15,15 @@ in vec4 fs_LightVec;
 in vec4 fs_Col;
 
 layout(location = 0) out vec3 out_Col;//This is the final output color that you will see on your screen for the pixel that is currently being processed.
+layout(location = 1) out vec4 out_Nor;
 
 void main()
 {
+    vec3 nor = (fs_Nor.xyz + vec3(1.0)) / vec3(2.0);
+    out_Nor = vec4(nor, 0.0);
+
     // Material base color (before shading)
-//    vec4 diffuseColor = texture(u_Texture, fs_UV);
+    // vec4 diffuseColor = texture(u_Texture, fs_UV);
     vec4 diffuseColor = fs_Col;
     // Calculate the diffuse term for Lambert shading
     float diffuseTerm = dot(normalize(fs_Nor), normalize(fs_LightVec));

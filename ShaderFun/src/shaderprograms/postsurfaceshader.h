@@ -22,7 +22,11 @@ public:
     int unifInstanceRes; // A handle to the "uniform" vec3 that stores the resolution of the grid (max dims of each instance mesh)
 
     int unifDepthSampler2D;
+    int unifNormalSampler2D;
     int unifDrawLambert;
+    int unifUseTexCol;
+    int unifUseGaussianFilter;
+    int unifUseNormalCulling;
 
 public:
     PostSurfaceShader(OpenGLContext* context);
@@ -49,4 +53,7 @@ public:
     void setDimensions(glm::ivec2);
 
     void setShadeLambert(int);
+    void setUseTexCol(int);
+    void setUseGaussianFilter(int);
+    void setUseNormalCulling(int);
 };

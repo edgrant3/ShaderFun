@@ -28,6 +28,10 @@ public slots:
     void slot_makeIGridSeethrough(int);
     void slot_shadeIGridLambert(int);
     void slot_setModelRotationFLag(int);
+    void slot_setUseTexCol(int);
+    void slot_setUseGaussianFilter(int);
+    void slot_setUseNormalCulling(int);
+    void slot_setUseBackgrounds(int);
 
 signals:
     void sig_setCurrentModel(int);
@@ -40,6 +44,10 @@ signals:
     void sig_makeIGridSeethrough(int);
     void sig_shadeIGridLambert(int);
     void sig_setModelRotationFLag(int);
+    void sig_setUseTexCol(int);
+    void sig_setUseGaussianFilter(int);
+    void sig_setUseNormalCulling(int);
+    void sig_setUseBackgrounds(int);
 };
 
 #endif // SHADERCONTROLS_H
